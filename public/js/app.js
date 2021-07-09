@@ -32,6 +32,7 @@ function postComment(comment) {
     broadcastComment(data);
 
     // store in database
+    storeInDb(data);
 }
 
 function appendToDom(data) {
@@ -89,3 +90,29 @@ socket.on("typing", (data) => {
 textarea.addEventListener("keyup", (e) => {
     socket.emit("typing", { username });
 });
+
+// API calls
+function storeInDb(data) {
+    const headers = {
+        'Content-Type': 'application/json'
+    }
+    fetch('/api/comments', { method: 'POST', body: JSON.stringify(data), headers })
+        .then(response => response.json())
+        .then(result => {
+            console.log(result)
+        })
+}
+
+function fetchComments() {
+    fetch("/api/comments")
+        .then(res => res.json())
+        .then(result => {
+            result.forEach((comment) => {
+                comment.time = comment.createdAt //to show comment posted time in website
+                appendToDom(comment);
+            })
+            console.log(result);
+        })
+}
+
+window.onload = fetchComments;
