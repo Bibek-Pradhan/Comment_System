@@ -6,8 +6,11 @@ mongoose.connect(process.env.DATABASE, {
     useUnifiedTopology: true,
     useCreateIndex: true
 }).then(() => {
-    console.log('Database connect sucessfully.');
+    console.log('DB Connected.');
 }).catch((e) => {
-    console.log('Failed connection.');
+    console.log('DB Broken.');
     console.log(e);
 })
+
+// This is the file edited by King Nishan KAdel.
+// Hail Nishan Kadel
